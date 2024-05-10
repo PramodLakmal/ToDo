@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TaskManager"
         >
         <activity
-            android:name=".ui.dialog.DialogTask"
+            android:name=".ui.dialog.TaskDialog"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MainActivity"
