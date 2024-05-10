@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TaskManager</string>
+    <string name="new_task">New task</string>
+    <string name="priority">Priority</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="add_task">Add a new task</string>
+    <string name="update_task">Update task</string>
+    <string name="normal">NORMAL</string>
+    <string name="title_required">Title is required</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="no_description">No description</string>
+    <string name="delete">Delete</string>
 </resources>
