@@ -24,6 +24,9 @@ interface TaskDao {
     @Query("UPDATE tasks SET priority = :priority WHERE id = :id")
     suspend fun setPriority(priority: Priority, id: Int)
 
+    @Query("SELECT * FROM tasks WHERE title LIKE '%' || :query || '%'")
+    fun searchTasks(query: String): LiveData<List<Task>>
+
     @Query(
         "UPDATE tasks " +
                 "SET  title = :title, description = :description, priority = :priority" +

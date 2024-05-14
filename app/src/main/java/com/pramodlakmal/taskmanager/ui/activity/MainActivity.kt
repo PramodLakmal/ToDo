@@ -21,6 +21,7 @@ import com.pramodlakmal.taskmanager.model.Task
 import com.pramodlakmal.taskmanager.ui.MainViewModel
 import com.pramodlakmal.taskmanager.ui.MainViewModelProviderFactory
 import com.pramodlakmal.taskmanager.ui.dialog.TaskDialog
+import androidx.appcompat.widget.SearchView
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val taskDialog get() = _taskDialog!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         mainViewModel = ViewModelProvider(
             this,
             MainViewModelProviderFactory(TodoDatabase(this))
@@ -45,23 +45,49 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
 
         mainViewModel.getTasks().observe(this) { tasks ->
-            val tasksList = tasks
-                .sortedBy { it.taskType }
-                .groupBy { it.taskType }
-                .flatMap {
-                    listOf(
-                        TaskDataModel.Header(it.key.name),
-                        *(it.value
-                            .sortedByDescending { t -> t.id!! }
-                            .map { task ->
-                                task.toDataModel()
-                            }).toTypedArray()
-                    )
-                }
-
-            taskDataAdapter.differ.submitList(tasksList)
+            updateTaskList(tasks)
         }
+
+        setupSearchView()
     }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { mainViewModel.searchTasks(it).observe(this@MainActivity) { tasks ->
+                    updateTaskList(tasks)
+                }}
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { mainViewModel.searchTasks(it).observe(this@MainActivity) { tasks ->
+                    updateTaskList(tasks)
+                }}
+                return true
+            }
+        })
+    }
+
+    private fun updateTaskList(tasks: List<Task>) {
+        val tasksList = tasks
+            .sortedBy { it.taskType }
+            .groupBy { it.taskType }
+            .flatMap {
+                listOf(
+                    TaskDataModel.Header(it.key.name),
+                    *(it.value
+                        .sortedByDescending { t -> t.id!! }
+                        .map { task ->
+                            task.toDataModel()
+                        }).toTypedArray()
+                )
+            }
+
+        taskDataAdapter.differ.submitList(tasksList)
+    }
+
+
 
     private fun setupToolbar() {
         mainViewModel.getToday()

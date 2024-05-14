@@ -1,5 +1,6 @@
 package com.pramodlakmal.taskmanager.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -52,6 +53,10 @@ class MainViewModel(
                 .getTaskDao()
                 .updateTask(task.id, task.title, task.description, task.priority)
         }
+    }
+
+    fun searchTasks(query: String): LiveData<List<Task>> {
+        return todoDatabase.getTaskDao().searchTasks(query)
     }
 
 }

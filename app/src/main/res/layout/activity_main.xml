@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,22 +26,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:queryHint="Search tasks"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_newTask"
+                    app:layout_constraintStart_toEndOf="@+id/tv_monthYear"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_newTask"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_marginBottom="8dp"
-                    android:text="@string/new_task"
+
                     android:textColor="@color/textColor"
                     app:icon="@drawable/ic_round_add_circle_24"
                     app:iconPadding="8dp"
                     app:iconTint="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
                     android:id="@+id/tv_date"
